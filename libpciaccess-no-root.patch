@@ -1,0 +1,60 @@
+diff --git a/src/common_bridge.c b/src/common_bridge.c
+index ec1eddd..8b268ed 100644
+--- a/src/common_bridge.c
++++ b/src/common_bridge.c
+@@ -270,8 +270,9 @@ pci_device_get_bridge_buses(struct pci_device * dev, int *primary_bus,
+ 	return ENODEV;
+     }
+ 
+-    if (priv->bridge.pci == NULL) {
+-	read_bridge_info(priv);
++    if (priv->bridge.pci == NULL || priv->bridge.pcmcia == NULL) {
++	    if (read_bridge_info(priv))
++		    return ENODEV;
+     }
+ 
+     switch ((dev->device_class >> 8) & 0x0ff) {
+diff --git a/src/linux_sysfs.c b/src/linux_sysfs.c
+index 8c3cf67..fffa286 100644
+--- a/src/linux_sysfs.c
++++ b/src/linux_sysfs.c
+@@ -320,7 +320,7 @@ pci_device_linux_sysfs_read_rom( struct pci_device * dev, void * buffer )
+ 	      dev->dev,
+ 	      dev->func );
+     
+-    fd = open( name, O_RDWR );
++    fd = open( name, O_RDONLY );
+     if ( fd == -1 ) {
+ 	/* If reading the ROM using sysfs fails, fall back to the old
+ 	 * /dev/mem based interface.
+@@ -558,7 +558,7 @@ pci_device_linux_sysfs_map_range(struct pci_device *dev,
+     /* For WC mappings, try sysfs resourceN_wc file first */
+     if ((map->flags & PCI_DEV_MAP_FLAG_WRITE_COMBINE) &&
+ 	!pci_device_linux_sysfs_map_range_wc(dev, map))
+-	    return 0;
++	    goto mmap_done;
+ 
+     snprintf(name, 255, "%s/%04x:%02x:%02x.%1u/resource%u",
+              SYS_BUS_PCI,
+@@ -580,7 +580,7 @@ pci_device_linux_sysfs_map_range(struct pci_device *dev,
+ 	close(fd);
+ 	return errno;
+     }
+-
++mmap_done:
+ #ifdef HAVE_MTRR
+     if ((map->flags & PCI_DEV_MAP_FLAG_CACHABLE) != 0) {
+         sentry.type = MTRR_TYPE_WRBACK;
+--- libpciaccess-0.10.6/src/common_bridge.c.org	2009-06-30 16:08:25.000000000 -0700
++++ libpciaccess-0.10.6/src/common_bridge.c	2009-06-30 16:08:17.000000000 -0700
+@@ -271,6 +271,10 @@
+ 	return ENODEV;
+     }
+ 
++    if (!priv->bridge.pci) {
++	return ENODEV;
++    }
++
+     switch ((dev->device_class >> 8) & 0x0ff) {
+     case 0x00:
+ 	/* What to do for host bridges?  I'm pretty sure this isn't right.
