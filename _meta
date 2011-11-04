@@ -1,8 +1,0 @@
-<package project="Mer:Trunk:Base" name="libpciaccess">
-  <title>PCI access library</title>
-  <description>Description: %{summary}
-
-
-</description>
-  <url>http://www.x.org/</url>
-</package>
