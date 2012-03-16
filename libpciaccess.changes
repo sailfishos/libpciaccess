@@ -1,3 +1,7 @@
+* Thu Mar 15 2012 Marko Saukko <marko.saukko@gmail.com> - 0.13
+- Update to version 0.13
+- Rebased libpciaccess-no-root.patch
+
 * Mon Jun 06 2011 Liu, Xinyun <xinyun.liu@intel.com> - 0.12.1
 - Updated to 0.12.1.
 
