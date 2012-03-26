@@ -15,6 +15,7 @@ URL:        http://www.x.org/
 Source0:    http://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
 Source100:  libpciaccess.yaml
 Patch0:     libpciaccess-no-root.patch
+Patch1:     libpciaccess-0.13-fixoutbw.patch
 Requires:   hwdata
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
@@ -38,6 +39,8 @@ Generic PCI access library development package
 
 # libpciaccess-no-root.patch
 %patch0 -p1
+# libpciaccess-0.13-fixoutbw.patch
+%patch1 -p1
 # >> setup
 # << setup
 

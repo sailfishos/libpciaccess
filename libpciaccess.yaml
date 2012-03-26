@@ -10,6 +10,7 @@ Sources:
     - http://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
 Patches:
     - libpciaccess-no-root.patch
+    - libpciaccess-0.13-fixoutbw.patch
 Requires:
     - hwdata
 SubPackages:
