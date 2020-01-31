@@ -16,18 +16,18 @@
 - Updated with latest spectacle
 - Include YAML file in source rpm
 
-* Fri Feb 05 2010 Li Peng <peng.li@intel.com> 0.11.0
+* Fri Feb 05 2010 Li Peng <peng.li@intel.com> - 0.11.0
 - libpciaccess 0.11.0
 
-* Fri Dec 11 2009 Li Peng <peng.li@intel.com> 0.10.9
+* Fri Dec 11 2009 Li Peng <peng.li@intel.com> - 0.10.9
 - libpciaccess 0.10.9
 
-* Wed Jul 1 2009 Arjan van de Ven <arjan@linux.intel.com> 0.10.6
+* Wed Jul 1 2009 Arjan van de Ven <arjan@linux.intel.com> - 0.10.6
 - enable non-root-X by going to the 0.10.6 bugfix release
 
-* Tue Dec 16 2008 Anas Nashif <anas.nashif@intel.com> 0.10.5
+* Tue Dec 16 2008 Anas Nashif <anas.nashif@intel.com> - 0.10.5
 - Update spec file using latest spec-builder
 
-* Tue Dec 16 2008 Peng Li <peng.li@intel.com> 0.10.5
+* Tue Dec 16 2008 Peng Li <peng.li@intel.com> - 0.10.5
 - use spec builder to generate spec file
 
