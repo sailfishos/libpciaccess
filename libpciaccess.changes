@@ -1,3 +1,7 @@
+* Fri Jan 31 2020 Marko Lemmetty <marko.lemmetty@jolla.com> - 0.16
+- Update to latest 0.16 version.
+  Contributes to JB#48615
+
 * Mon Mar 26 2012 Carsten Munk <carsten@merproject.org> - 0.13
 - Add patch for outb on non-I/O architectures for MIPS
 

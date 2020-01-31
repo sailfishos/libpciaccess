@@ -34,9 +34,9 @@ index 9566d40..3f069fb 100644
  	      dev->dev,
  	      dev->func );
 -
--    fd = open( name, O_RDWR );
+-    fd = open( name, O_RDWR | O_CLOEXEC);
 +    
-+    fd = open( name, O_RDONLY );
++    fd = open( name, O_RDONLY | O_CLOEXEC);
      if ( fd == -1 ) {
  #ifdef LINUX_ROM
  	/* If reading the ROM using sysfs fails, fall back to the old
