@@ -2,7 +2,7 @@ diff --git a/src/common_bridge.c b/src/common_bridge.c
 index 4a067b9..93ccc41 100644
 --- a/src/common_bridge.c
 +++ b/src/common_bridge.c
-@@ -209,8 +209,9 @@ pci_device_get_bridge_info( struct pci_device * dev )
+@@ -212,8 +212,9 @@ pci_device_get_bridge_info( struct pci_device * dev )
  {
      struct pci_device_private * priv = (struct pci_device_private *) dev;
  
@@ -10,11 +10,11 @@ index 4a067b9..93ccc41 100644
 -	read_bridge_info(priv);
 +    if (priv->bridge.pci == NULL || priv->bridge.pcmcia == NULL) {
 +	    if (read_bridge_info(priv))
-+		    return ENODEV;
++		    return NULL;
      }
  
-     return (priv->header_type == 1) ? priv->bridge.pci : NULL;
-@@ -270,6 +271,10 @@ pci_device_get_bridge_buses(struct pci_device * dev, int *primary_bus,
+     return ((priv->header_type & 0x7f) == 1) ? priv->bridge.pci : NULL;
+@@ -273,6 +274,10 @@ pci_device_get_bridge_buses(struct pci_device * dev, int *primary_bus,
  	return ENODEV;
      }
  
@@ -29,7 +29,7 @@ diff --git a/src/linux_sysfs.c b/src/linux_sysfs.c
 index 9566d40..3f069fb 100644
 --- a/src/linux_sysfs.c
 +++ b/src/linux_sysfs.c
-@@ -306,8 +306,8 @@ pci_device_linux_sysfs_read_rom( struct pci_device * dev, void * buffer )
+@@ -373,8 +373,8 @@ pci_device_linux_sysfs_read_rom( struct pci_device * dev, void * buffer )
  	      dev->bus,
  	      dev->dev,
  	      dev->func );
@@ -40,7 +40,7 @@ index 9566d40..3f069fb 100644
      if ( fd == -1 ) {
  #ifdef LINUX_ROM
  	/* If reading the ROM using sysfs fails, fall back to the old
-@@ -554,7 +554,7 @@ pci_device_linux_sysfs_map_range(struct pci_device *dev,
+@@ -621,7 +621,7 @@ pci_device_linux_sysfs_map_range(struct pci_device *dev,
      /* For WC mappings, try sysfs resourceN_wc file first */
      if ((map->flags & PCI_DEV_MAP_FLAG_WRITE_COMBINE) &&
  	!pci_device_linux_sysfs_map_range_wc(dev, map))
@@ -49,7 +49,7 @@ index 9566d40..3f069fb 100644
  
      snprintf(name, 255, "%s/%04x:%02x:%02x.%1u/resource%u",
               SYS_BUS_PCI,
-@@ -576,7 +576,7 @@ pci_device_linux_sysfs_map_range(struct pci_device *dev,
+@@ -643,7 +643,7 @@ pci_device_linux_sysfs_map_range(struct pci_device *dev,
  	close(fd);
  	return errno;
      }
